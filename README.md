@@ -9,6 +9,5 @@ Port of my crystalliser processing sketch to python to run as a [twitter bot](ht
 
 ## To-Do
 
-- Turn block-by-block averaging into half-block triangle averaging
 - Incorporate tweepy to pull images from mentions & reply with the crystallised image
 - Test with images with transparency - do transparent pixels wash out surrounding ones?

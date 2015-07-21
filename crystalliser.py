@@ -1,5 +1,4 @@
 import Image
-from PIL import ImageFilter
 
 #Twice the actual chunk size so we can downscale for anti-aliasing
 chunkSize = 20

@@ -45,5 +45,5 @@ for x in range(0,w,chunkSize):
         drawTopHalf(x,y,pixelMap)
         drawBottomHalf(x,y,pixelMap)
 
-image = image.filter(ImageFilter.SMOOTH)
+image = image.filter(ImageFilter.GaussianBlur(radius=0.75))
 image.save('output.png')

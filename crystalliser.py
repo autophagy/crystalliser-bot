@@ -3,6 +3,7 @@ import Image
 import tweepy
 import requests
 from StringIO import StringIO
+import pickle
 
 #Twice the actual chunk size so we can downscale for anti-aliasing
 chunkSize = 20
@@ -69,8 +70,11 @@ def getAPI(consumerKey, consumerSecret, accessKey, accessSecret):
     api = tweepy.API(auth)
     return api
 
-def replyToMentions(api):
-    mentions = api.mentions_timeline()
+def replyToMentions(api, sinceID):
+    mentions = api.mentions_timeline(since_id=sinceID)
+
+    #Pickle the first mention as the new sinceID
+    pickle.dump(mentions[0].id_str, open("sinceID.p", "wb"))
 
     for mention in mentions:
         tweetID = mention.id_str
@@ -91,4 +95,5 @@ def replyToMentions(api):
         api.update_with_media('output.png',status='@' + user,in_reply_to_status_id=tweetID)
 
 api = getAPI(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-replyToMentions(api)
+sinceID = pickle.load(open("sinceID.p", "rb"))
+replyToMentions(api, sinceID)

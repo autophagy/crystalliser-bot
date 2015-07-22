@@ -73,26 +73,27 @@ def getAPI(consumerKey, consumerSecret, accessKey, accessSecret):
 def replyToMentions(api, sinceID):
     mentions = api.mentions_timeline(since_id=sinceID)
 
-    #Pickle the first mention as the new sinceID
-    pickle.dump(mentions[0].id_str, open("sinceID.p", "wb"))
+    if(len(mentions) > 0):
+        #Pickle the first mention as the new sinceID
+        pickle.dump(mentions[0].id_str, open("sinceID.p", "wb"))
 
-    for mention in mentions:
-        tweetID = mention.id_str
-        media = mention.entities.get("media",[{}])[0]
-        user = mention.user.screen_name
+        for mention in mentions:
+            tweetID = mention.id_str
+            media = mention.entities.get("media",[{}])[0]
+            user = mention.user.screen_name
 
-        ##First download the Image
-        resp = requests.get(media["media_url"])
-        image = Image.open(StringIO(resp.content))
+            ##First download the Image
+            resp = requests.get(media["media_url"])
+            image = Image.open(StringIO(resp.content))
 
-        #crystallise it
-        image = crystallise(image)
+            #crystallise it
+            image = crystallise(image)
 
-        #Save it
-        image.save('output.png')
+            #Save it
+            image.save('output.png')
 
-        #Tweet it back at the user
-        api.update_with_media('output.png',status='@' + user,in_reply_to_status_id=tweetID)
+            #Tweet it back at the user
+            api.update_with_media('output.png',status='@' + user,in_reply_to_status_id=tweetID)
 
 api = getAPI(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 sinceID = pickle.load(open("sinceID.p", "rb"))

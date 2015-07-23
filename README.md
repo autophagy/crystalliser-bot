@@ -1,6 +1,8 @@
 # crystalliser-bot
 Port of my crystalliser processing sketch to python to run as a [twitter bot](https://twitter.com/crystalliser). Original, I know
 
+I also did a [small write-up](http://www.deadcells.org/crystalliser-twitter-bot/) of this project on my site
+
 ## Example input
 ![input](input.jpg)
 
@@ -10,5 +12,4 @@ Port of my crystalliser processing sketch to python to run as a [twitter bot](ht
 ## To-Do
 
 - Instead of saving output image to disk, just make an in memory object
-- Implement a form of Last Seen ID, to pull mentions past a certain tweet id (no repeats)
 - Incorporate .gif functionality
